@@ -1,13 +1,13 @@
 import { addWater, updateWater, deleteWater } from '../services/water.js';
 
-export const addWaterController = async (req, res, next) => {
+export const addWaterController = async (req, res) => {
   const { amount, date } = req.body;
 
   const formattedDate = new Date(date);
 
-  const userId = '67a1f599b7ed372da1c632e0';
+  const owner = 'mock-user-id-123';
 
-  const newWater = await addWater(userId, amount, formattedDate);
+  const newWater = await addWater(owner, amount, formattedDate);
 
   res.status(201).json({
     status: 201,
@@ -16,13 +16,13 @@ export const addWaterController = async (req, res, next) => {
   });
 };
 
-export const updateWaterController = async (req, res, next) => {
+export const updateWaterController = async (req, res) => {
   const { id } = req.params;
   const { amount, date } = req.body;
 
-  const userId = '67a1f599b7ed372da1c632e0';
+  const owner = 'mock-user-id-123';
 
-  const updatedWater = await updateWater(userId, id, amount, date);
+  const updatedWater = await updateWater(owner, id, amount, date);
 
   res.json({
     status: 200,
@@ -31,12 +31,12 @@ export const updateWaterController = async (req, res, next) => {
   });
 };
 
-export const deleteWaterController = async (req, res, next) => {
+export const deleteWaterController = async (req, res) => {
   const { id } = req.params;
 
-  const userId = '67a1f599b7ed372da1c632e0';
+  const owner = 'mock-user-id-123';
 
-  await deleteWater(userId, id);
+  await deleteWater(owner, id);
 
   res.status(204).send();
 };
