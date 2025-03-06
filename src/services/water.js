@@ -1,5 +1,4 @@
-import expressAsyncHandler from "express-async-handler";
-import { Water } from "../db/models/water.js";
+import expressAsyncHandler from 'express-async-handler';
 
 export const getDayWaterService = expressAsyncHandler(async (req, res) => {
   const { _id: owner } = req.user;
@@ -7,33 +6,39 @@ export const getDayWaterService = expressAsyncHandler(async (req, res) => {
 
   const userTimezoneOffset = req.user.timezoneOffset || 0;
 
-// Початок дня у UTC
-const startOfDay = new Date(date);
-startOfDay.setUTCHours(0, 0, 0, 0); // Встановлюємо час на початок дня (00:00:00)
-startOfDay.setMinutes(startOfDay.getMinutes() - userTimezoneOffset); // Коригуємо на часовий пояс користувача
+  // Початок дня у UTC
+  // Встановлюємо час на початок дня (00:00:00)
+  // Коригуємо на часовий пояс користувача
+  const startOfDay = new Date(date);
+  startOfDay.setUTCHours(0, 0, 0, 0);
+  startOfDay.setMinutes(startOfDay.getMinutes() - userTimezoneOffset);
 
-// Кінець дня у UTC
-const endOfDay = new Date(date);
-endOfDay.setUTCHours(23, 59, 59, 999); // Встановлюємо час на кінець дня (23:59:59.999)
-endOfDay.setMinutes(endOfDay.getMinutes() - userTimezoneOffset); // Коригуємо на часовий пояс користувача
+  // Кінець дня у UTC
+  // Встановлюємо час на кінець дня (23:59:59.999)
+  // Коригуємо на часовий пояс користувача
+  const endOfDay = new Date(date);
+  endOfDay.setUTCHours(23, 59, 59, 999);
+  endOfDay.setMinutes(endOfDay.getMinutes() - userTimezoneOffset);
 
+  // Цей код пріоритетний і його потрібно розкоментувати, коли видалимо фікційні дані- масив обʼєктів нижче foundWaterDayData
 
   // const foundWaterDayData = await Water.find({
   //   owner,
   //   date: {
-  //     $gte: startOfDay,
-  //     $lt: endOfDay,
+  //     $gte: startOfDay,// Включає всі записи, починаючи з 00:00
+  //     $lt: endOfDay, // Включає всі записи ДО 23:59:59.999
   //   },
   // });
 
+  // Фікційні дані для тестування, потрібно буде пізніше видалити
   const foundWaterDayData = [
     {
-      _id: "mock123",
+      _id: 'mock123',
       date: new Date().toISOString(),
       amount: 500,
     },
     {
-      _id: "mock124",
+      _id: 'mock124',
       date: new Date().toISOString(),
       amount: 300,
     },
@@ -43,19 +48,18 @@ endOfDay.setMinutes(endOfDay.getMinutes() - userTimezoneOffset); // Коригу
     return {
       date,
       totalDayWater: 0,
-      consumedWaterData : [],
+      consumedWaterData: [],
       owner,
     };
   }
 
-  const totalDayWater = foundWaterDayData.reduce(
-    (acc, item) => acc + item.amount,
-    0,
-  );
-  const consumedWaterData = foundWaterDayData.map(item => ({
+  // Обчислення обʼєму води випитої за день
+  // Створення масиву даних про спожиту воду
+  const totalDayWater = foundWaterDayData.reduce((acc, item) => acc + item.amount, 0);
+  const consumedWaterData = foundWaterDayData.map((item) => ({
     _id: item._id,
     date: item.date,
-    amount: item.amount
+    amount: item.amount,
   }));
 
   return {
@@ -66,17 +70,17 @@ endOfDay.setMinutes(endOfDay.getMinutes() - userTimezoneOffset); // Коригу
   };
 });
 
-
 export const getMonthWaterService = expressAsyncHandler(async (req, res) => {
   const { _id: owner } = req.user;
   const date = new Date(req.query.date);
 
-  // Початок місяця
+  // Визначаємо початок місяця
   const startOfMonth = new Date(date.getFullYear(), date.getMonth(), 1);
 
-  // Кінець місяця
+  // Визначаємо кінець місяця
   const endOfMonth = new Date(date.getFullYear(), date.getMonth() + 1, 0);
 
+  // Цей код пріоритетний і його потрібно розкоментувати, коли видалимо фікційні дані- масив обʼєктів foundWaterMonthData
   // const foundWaterMonthData = await Water.find({
   //   owner,
   //   date: {
@@ -85,20 +89,21 @@ export const getMonthWaterService = expressAsyncHandler(async (req, res) => {
   //   },
   // });
 
+  // Фікційні дані для тестування, потрібно буде пізніше видалити
   const foundWaterMonthData = [
     {
-      _id: "mock125",
-      date: new Date("2024-03-01T10:00:00.000Z"),
+      _id: 'mock125',
+      date: new Date('2024-03-01T10:00:00.000Z'),
       amount: 500,
     },
     {
-      _id: "mock126",
-      date: new Date("2024-03-02T12:00:00.000Z"),
+      _id: 'mock126',
+      date: new Date('2024-03-02T12:00:00.000Z'),
       amount: 300,
     },
     {
-      _id: "mock127",
-      date: new Date("2024-03-02T18:00:00.000Z"),
+      _id: 'mock127',
+      date: new Date('2024-03-02T18:00:00.000Z'),
       amount: 700,
     },
   ];

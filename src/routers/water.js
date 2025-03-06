@@ -1,15 +1,16 @@
 import {Router} from "express";
-import { getDayWaterContoller, getMonthWaterContoller } from "../controllers/water";
+import { ctrlWrapper } from "../utils/ctrlWrapper.js";
+import { getDayWaterContoller, getMonthWaterContoller } from "../controllers/water.js";
 
-const router = Router();
+const waterRouter = Router();
 
-router.get(
+waterRouter.get(
   '/day',
   ctrlWrapper(getDayWaterContoller),
 );
-router.get(
+waterRouter.get(
   '/month',
   ctrlWrapper(getMonthWaterContoller),
 );
 
-export default router;
+export default waterRouter;

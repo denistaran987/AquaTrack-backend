@@ -1,4 +1,4 @@
-import { getDayWaterService, getMonthWaterService } from "../services/water";
+import { getDayWaterService, getMonthWaterService } from "../services/water.js";
 
 export async function getDayWaterContoller(req, res) {
 
@@ -9,7 +9,6 @@ export async function getDayWaterContoller(req, res) {
     data: result,
   });
 }
-
 
 export async function getMonthWaterContoller(req, res) {
 
