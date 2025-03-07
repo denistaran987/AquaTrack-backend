@@ -1,23 +1,33 @@
 import { Router } from 'express';
-
+import { ctrlWrapper } from "../utils/ctrlWrapper.js";
+import { getDayWaterContoller, getMonthWaterContoller } from "../controllers/water.js";
 import {
   addWaterController,
   updateWaterController,
   deleteWaterController,
 } from '../controllers/water.js';
 
-import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 
 import { validateBody } from '../middlewares/validateBody.js';
 
-import { addWaterRecordSchema, updateWaterRecordSchema } from '../validation/water.js';
+import { addWaterSchema, updateWaterSchema } from '../validation/water.js';
 
-const router = Router();
+const waterRouter = Router();
 
-router.post('/', validateBody(addWaterRecordSchema), ctrlWrapper(addWaterController));
+waterRouter.post('/', validateBody(addWaterSchema), ctrlWrapper(addWaterController));
 
-router.patch('/:id', validateBody(updateWaterRecordSchema), ctrlWrapper(updateWaterController));
+waterRouter.patch('/:id', validateBody(updateWaterSchema), ctrlWrapper(updateWaterController));
 
-router.delete('/:id', ctrlWrapper(deleteWaterController));
+waterRouter.delete('/:id', ctrlWrapper(deleteWaterController));
 
-export default router;
+waterRouter.get(
+  '/day',
+  ctrlWrapper(getDayWaterContoller),
+);
+waterRouter.get(
+  '/month',
+  ctrlWrapper(getMonthWaterContoller),
+);
+
+export default waterRouter;
+
