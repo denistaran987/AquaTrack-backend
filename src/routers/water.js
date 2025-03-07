@@ -11,14 +11,15 @@ import {
 import { validateBody } from '../middlewares/validateBody.js';
 
 import { addWaterSchema, updateWaterSchema } from '../validation/water.js';
+import { isValidId } from '../middlewares/isValidId.js';
 
 const waterRouter = Router();
 
 waterRouter.post('/', validateBody(addWaterSchema), ctrlWrapper(addWaterController));
 
-waterRouter.patch('/:id', validateBody(updateWaterSchema), ctrlWrapper(updateWaterController));
+waterRouter.patch('/:id',  isValidId, validateBody(updateWaterSchema), ctrlWrapper(updateWaterController));
 
-waterRouter.delete('/:id', ctrlWrapper(deleteWaterController));
+waterRouter.delete('/:id',  isValidId, ctrlWrapper(deleteWaterController));
 
 waterRouter.get(
   '/day',

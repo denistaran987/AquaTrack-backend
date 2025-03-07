@@ -6,7 +6,7 @@ export const addWaterController = async (req, res) => {
 
   const formattedDate = new Date(date);
 
-  const owner = 'mock-user-id-123';
+  const owner = req.user._id;
 
   const newWater = await addWater(owner, amount, formattedDate);
 
@@ -21,7 +21,7 @@ export const updateWaterController = async (req, res) => {
   const { id } = req.params;
   const { amount, date } = req.body;
 
-  const owner = 'mock-user-id-123';
+  const owner = req.user._id;
 
   const updatedWater = await updateWater(owner, id, amount, date);
 
@@ -35,7 +35,7 @@ export const updateWaterController = async (req, res) => {
 export const deleteWaterController = async (req, res) => {
   const { id } = req.params;
 
-  const owner = 'mock-user-id-123';
+  const owner = req.user._id;
 
   await deleteWater(owner, id);
 
