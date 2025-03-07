@@ -1,0 +1,48 @@
+tags:
+  - Users
+summary: Update current user avatar
+operationId: updateUser
+description: Update current user avatar.
+security:
+  - bearerAuth: []
+requestBody:
+  content:
+    multipart/form-data::
+      schema:
+        type: object
+        required:
+          - id
+        properties:
+          id:
+            type: string
+            example: '67b0fb1c07658221fbada021'
+          avatarUrl:
+            type: string
+            format: binary
+responses:
+  '200':
+    description: Successfully patched a user!
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: Successfully patched a user!
+            data:
+              type: object
+              $ref: '../../../components/schemas/user.yaml'
+  '400':
+    $ref: ../../../components/responses/400.yaml
+  '401':
+    $ref: ../../../components/responses/401.yaml
+  '404':
+    $ref: ../../../components/responses/404.yaml
