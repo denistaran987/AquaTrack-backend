@@ -13,6 +13,6 @@ const authRouter = Router();
 authRouter.post('/signup', validateBody(registerUserSchema), ctrlWrapper(registerUserController));
 authRouter.post('/signin', validateBody(loginUserSchema), ctrlWrapper(loginUserController));
 authRouter.post('/logout', ctrlWrapper(logoutUserController));
-authRouter.get('/total-users', ctrlWrapper(countUsersController));
+authRouter.get('/totalUsers', ctrlWrapper(countUsersController));
 
 export default authRouter;
