@@ -14,7 +14,7 @@
       "url": "http://localhost:3000"
     },
     {
-      "url": "https://nodejs-hw-mongodb-7mno.onrender.com"
+      "url": "https://aquatrack-backend-1b8z.onrender.com"
     }
   ],
   "tags": [
@@ -250,6 +250,193 @@
           }
         }
       }
+    },
+    "/water": {
+      "post": {
+        "tags": [
+          "Water"
+        ],
+        "summary": "Add  water portion",
+        "operationId": "addWater",
+        "description": "Create data of water portion with payload",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "amount",
+                  "date"
+                ],
+                "properties": {
+                  "amount": {
+                    "description": "\"Time to drinking water portion\"",
+                    "type": "number",
+                    "example": 100
+                  },
+                  "date": {
+                    "description": "Time of drinking a portion of water",
+                    "type": "string",
+                    "example": "2024-03-01T10:00:00.000Z"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Create water portion",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 201
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully created water portion!"
+                    },
+                    "data": {
+                      "type": "object",
+                      "$ref": "#/components/schemas/water"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/water/{id}": {
+      "patch": {
+        "tags": [
+          "Water"
+        ],
+        "summary": "Update water portion",
+        "operationId": "updateWater",
+        "description": "Update the portion of water by id",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "65ca67e7ae7f10c88b598384"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "amount": {
+                    "description": "The amount of water drunk, ml",
+                    "type": "number",
+                    "example": 100
+                  },
+                  "date": {
+                    "description": "Time of drinking a portion of water",
+                    "type": "string",
+                    "example": "2024-03-01T10:00:00.000Z"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Patch data of water portion",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully patched the data of water portion!"
+                    },
+                    "data": {
+                      "type": "object",
+                      "$ref": "#/components/schemas/water"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Water"
+        ],
+        "summary": "Delete water portion",
+        "operationId": "deleteWater",
+        "description": "Delete the portion of water",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "65ca67e7ae7f10c88b598384"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successfully the portion of water deleted!"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -368,6 +555,39 @@
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "schemas": {
+      "water": {
+        "type": "object",
+        "required": [
+          "_id",
+          "amount",
+          "date",
+          "owner"
+        ],
+        "properties": {
+          "_id": {
+            "description": "Unique identifier",
+            "type": "string",
+            "example": "65ca67e7ae7f10c88b598384"
+          },
+          "amount": {
+            "description": "The water's volume (in ml)",
+            "type": "number",
+            "example": 100
+          },
+          "date": {
+            "description": "Time to drinking water's portion",
+            "type": "string",
+            "example": "2024-03-01T10:00:00.000Z"
+          },
+          "owner": {
+            "description": "Owner id",
+            "type": "string",
+            "example": "65ca67e7ae7f10c88b598384"
           }
         }
       }

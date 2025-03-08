@@ -6,19 +6,18 @@ required:
   - owner
 properties:
   _id:
-    description: "Unique identifier"
+    description: 'Unique identifier'
     type: string
     example: 65ca67e7ae7f10c88b598384
   amount:
     description: "The water's volume (in ml)"
     type: number
     example: 100
-
-    date:
-      description: "Time to drinking water's portion"
-      type: string
-      example: "2024-03-01T10:00:00.000Z"
-    owner:
-      description: "Owner id"
-      type: string
-      example: 65ca67e7ae7f10c88b598384
+  date:
+    description: "Time to drinking water's portion"
+    type: string
+    example: '2024-03-01T10:00:00.000Z'
+  owner:
+    description: 'Owner id'
+    type: string
+    example: 65ca67e7ae7f10c88b598384
