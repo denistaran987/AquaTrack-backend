@@ -16,4 +16,5 @@ responses:
   '204':
     description: 'Successfully the portion of water deleted!'
   '404':
-    $ref: '../../components/responses/404.yaml'
+    $ref: '../../../components/responses/404.yaml'
+
