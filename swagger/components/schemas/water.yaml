@@ -12,12 +12,17 @@ properties:
   amount:
     description: "The water's volume (in ml)"
     type: number
-    example: 100
+    minimum: 0
+    maximum: 5000
+    example: 50
   date:
     description: "Time to drinking water's portion"
     type: string
+    format: date-time
+    pattern: ^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}Z$
     example: '2024-03-01T10:00:00.000Z'
   owner:
-    description: 'Owner id'
+    description: 'The unique identifier of the user who owns this water card.'
     type: string
     example: 65ca67e7ae7f10c88b598384
+    
