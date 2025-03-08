@@ -437,6 +437,183 @@
           }
         }
       }
+    },
+    "/water/day": {
+      "get": {
+        "tags": [
+          "Water"
+        ],
+        "summary": "Day cards",
+        "operationId": "dayCard",
+        "description": "Retrieve the total water cards for the day. User must provide a valid access token in the `Authorization` header and a date in the query parameters to specify the day.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "date",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "example": "2025-01-12T00:00:00Z"
+            },
+            "description": "The date to specify the day for which the water cards are being retrieved. Must be in ISO 8601 format."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved the total water cards for the day.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Total day water cards"
+                    },
+                    "data": {
+                      "type": "object",
+                      "required": [
+                        "date",
+                        "totalDayWater",
+                        "consumedWaterData",
+                        "owner"
+                      ],
+                      "properties": {
+                        "date": {
+                          "type": "string",
+                          "format": "date-time",
+                          "example": "2025-01-12T00:00:00Z"
+                        },
+                        "totalDayWater": {
+                          "description": "The total amount of water consumed per day, in milliliters.",
+                          "type": "number",
+                          "example": 5000
+                        },
+                        "consumedWaterData": {
+                          "description": "The list of water cards for the day.",
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/water"
+                          }
+                        },
+                        "owner": {
+                          "description": "The unique identifier of the user who owns the water cards.",
+                          "type": "string",
+                          "example": "60d21b4667d0d8992e610c85"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/water/month": {
+      "get": {
+        "tags": [
+          "Water"
+        ],
+        "summary": "Month cards",
+        "operationId": "monthCard",
+        "description": "Retrieve the total water cards for the month. This endpoint allows the authenticated user to get a summary of their water intake for a specific month. The user must provide a valid access token in the `Authorization` header and a date in the query parameters to specify the month.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "date",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "example": "2025-01-01T00:00:00Z"
+            },
+            "description": "The date to specify the month for which the water cards are being retrieved. Must be in ISO 8601 format."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved the total water cards for the month.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Total month water cards"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "date",
+                          "totalDayWater"
+                        ],
+                        "properties": {
+                          "date": {
+                            "type": "string",
+                            "format": "date-time",
+                            "example": "2025-01-01T00:00:00Z"
+                          },
+                          "totalDayWater": {
+                            "description": "The total amount of water consumed per day, in milliliters.",
+                            "type": "number",
+                            "example": 5000
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -577,15 +754,19 @@
           "amount": {
             "description": "The water's volume (in ml)",
             "type": "number",
-            "example": 100
+            "minimum": 0,
+            "maximum": 5000,
+            "example": 50
           },
           "date": {
             "description": "Time to drinking water's portion",
             "type": "string",
+            "format": "date-time",
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}Z$",
             "example": "2024-03-01T10:00:00.000Z"
           },
           "owner": {
-            "description": "Owner id",
+            "description": "The unique identifier of the user who owns this water card.",
             "type": "string",
             "example": "65ca67e7ae7f10c88b598384"
           }
