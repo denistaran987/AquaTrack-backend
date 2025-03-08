@@ -1,0 +1,20 @@
+tags:
+  - Water
+summary: Delete water portion
+operationId: deleteWater
+description: 'Delete the portion of water'
+security:
+  - bearerAuth: []
+parameters:
+  - in: path
+    name: id
+    required: true
+    schema:
+      type: string
+      example: '65ca67e7ae7f10c88b598384'
+responses:
+  '204':
+    description: 'Successfully the portion of water deleted!'
+  '404':
+    $ref: '../../../components/responses/404.yaml'
+

@@ -23,5 +23,4 @@ const waterSchema = new Schema(
   },
   { versionKey: false, timestamps: true },
 );
-
 export const Water = model('Water', waterSchema);

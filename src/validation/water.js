@@ -28,3 +28,6 @@ export const updateWaterSchema = Joi.object({
     .example(50)
     .description('Volume of water in milliliters')
 });
+
+
+
