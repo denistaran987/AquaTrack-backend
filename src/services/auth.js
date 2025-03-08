@@ -46,6 +46,10 @@ export const loginUser = async (payload) => {
 
 };
 
+export const countUsers = async () => {
+    return await UsersCollection.countDocuments();
+};
+
 
 
 export const logoutUser = (sessionId) => SessionsCollection.deleteOne({ _id: sessionId });
