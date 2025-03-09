@@ -7,13 +7,12 @@ export const addWaterSchema = Joi.object({
     .example('2025-01-05T17:20:38.936Z')
     .description('Water card creation date in ISO 8601 format'),
   amount: Joi.number()
-    .min(0) 
+    .min(0)
     .max(5000)
     .required()
     .example(50)
-    .description('Volume of water in milliliters')
+    .description('Volume of water in milliliters'),
 });
-
 
 export const updateWaterSchema = Joi.object({
   date: Joi.string()
@@ -22,12 +21,9 @@ export const updateWaterSchema = Joi.object({
     .example('2025-01-05T17:20:38.936Z')
     .description('Water card creation date in ISO 8601 format'),
   amount: Joi.number()
-    .min(0) 
+    .min(0)
     .max(5000)
     .required()
     .example(50)
-    .description('Volume of water in milliliters')
+    .description('Volume of water in milliliters'),
 });
-
-
-

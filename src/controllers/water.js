@@ -1,4 +1,4 @@
-import { getDayWaterService, getMonthWaterService } from "../services/water.js";
+import { getDayWaterService, getMonthWaterService } from '../services/water.js';
 import { addWater, updateWater, deleteWater } from '../services/water.js';
 
 export const addWaterController = async (req, res) => {
@@ -42,10 +42,7 @@ export const deleteWaterController = async (req, res) => {
   res.status(204).send();
 };
 
-
-
-export async function getDayWaterContoller(req, res) {
-
+export async function getDayWaterController(req, res) {
   const result = await getDayWaterService(req, res);
   res.status(200).send({
     status: 200,
@@ -54,8 +51,7 @@ export async function getDayWaterContoller(req, res) {
   });
 }
 
-export async function getMonthWaterContoller(req, res) {
-
+export async function getMonthWaterController(req, res) {
   const result = await getMonthWaterService(req, res);
   res.status(200).send({
     status: 200,
@@ -63,4 +59,3 @@ export async function getMonthWaterContoller(req, res) {
     data: result,
   });
 }
-

@@ -1,4 +1,4 @@
-import { Water } from '../db/models/water.js';
+import { WaterCollection } from '../db/models/water.js';
 import createError from 'http-errors';
 import expressAsyncHandler from 'express-async-handler';
 
@@ -9,7 +9,7 @@ export const addWater = async (owner, amount, date) => {
 
   const formattedDate = new Date(date);
 
-  const newWater = await Water.create({
+  const newWater = await WaterCollection.create({
     amount,
     date: formattedDate,
     owner,
@@ -22,7 +22,7 @@ export const updateWater = async (owner, id, amount, date) => {
     throw createError(400, 'Please, enter amount from 50 to 5000 ml');
   }
 
-  const updatedWater = await Water.findOneAndUpdate(
+  const updatedWater = await WaterCollection.findOneAndUpdate(
     { _id: id, owner },
     { amount, date: new Date(date) },
     { new: true },
@@ -36,7 +36,7 @@ export const updateWater = async (owner, id, amount, date) => {
 };
 
 export const deleteWater = async (owner, id) => {
-  const deletedWater = await Water.findOneAndDelete({
+  const deletedWater = await WaterCollection.findOneAndDelete({
     _id: id,
     owner,
   });
@@ -47,7 +47,6 @@ export const deleteWater = async (owner, id) => {
 
   return;
 };
-
 
 export const getDayWaterService = expressAsyncHandler(async (req, res) => {
   const { _id: owner } = req.user;
@@ -69,7 +68,7 @@ export const getDayWaterService = expressAsyncHandler(async (req, res) => {
   endOfDay.setUTCHours(23, 59, 59, 999);
   endOfDay.setMinutes(endOfDay.getMinutes() - userTimezoneOffset);
 
-  const foundWaterDayData = await Water.find({
+  const foundWaterDayData = await WaterCollection.find({
     owner,
     date: {
       $gte: startOfDay, // Включає всі записи, починаючи з 00:00
@@ -104,7 +103,7 @@ export const getMonthWaterService = expressAsyncHandler(async (req, res) => {
   // Визначаємо кінець місяця
   const endOfMonth = new Date(date.getFullYear(), date.getMonth() + 1, 0);
 
-  const foundWaterMonthData = await Water.find({
+  const foundWaterMonthData = await WaterCollection.find({
     owner,
     date: {
       $gte: startOfMonth,
@@ -130,4 +129,3 @@ export const getMonthWaterService = expressAsyncHandler(async (req, res) => {
   const result = Object.values(summarizedData);
   return result;
 });
-
