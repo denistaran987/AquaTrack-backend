@@ -1,0 +1,52 @@
+type: object
+required:
+  - name
+  - email
+  - password
+properties:
+  _id:
+    description: "User's id"
+    type: string
+    example: 65e4decdd286b30065d54af9
+  name:
+    description: "User's name"
+    type: string
+    example: 'John Doe'
+    default: ''
+    minimum: 2
+    maximum: 12
+  email:
+    description: "User's email"
+    type: string
+    example: 'varvara@gmail.com'
+  password:
+    description: "User's password"
+    type: string
+    example: '$2b$10$EixZaYVK1fsbw1ZfbX3OXeP'
+  gender:
+    description: "User's gender"
+    type: string
+    enum: ['woman', 'man']
+    default: 'woman'
+  weight:
+    description: "User's weight"
+    type: number
+    example: 55
+    default: 0
+  dailySportTime:
+    description: "User's dailySportTime"
+    type: number
+    example: 5
+    default: 0
+  dailyNorm:
+    description: "User's dailyNorm"
+    type: integer
+    example: 1500
+    default: 1500
+    minimum: 500
+    maximum: 15000
+  avatarUrl:
+    description: "Link to user's photo"
+    type: string
+    example: https://res.cloudinary.com/uqwgdu/image/upload/image.png
+    default:

@@ -13,7 +13,7 @@ parameters:
       type: string
       example: 67b91abbb180078c4327247d
 responses:
-  "200":
+  '200':
     description: Current user with id
     content:
       application/json:
@@ -32,6 +32,6 @@ responses:
               example: Successfully found contact with id 67b91abbb180078c4327247d!
             data:
               type: object
-              $ref: "../../../components/schemas/user.yaml"
-  "404":
-    $ref: "../../../components/responses/404.yaml"
+              $ref: '../../components/schemas/user.yaml'
+  '401':
+    $ref: '../../components/responses/401.yaml'

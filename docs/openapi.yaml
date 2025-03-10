@@ -18,6 +18,18 @@ paths:
   /auth/signin:
     post:
       $ref: ../swagger/paths/auth/signin/post.yaml
+  /auth/refresh:
+    post:
+      $ref: ../swagger/paths/auth/refresh/post.yaml
+  /user:
+    get:
+      $ref: ../swagger/paths/user/get.yaml
+  /user:
+    patch:
+      $ref: ../swagger/paths/user/patch.yaml
+  /user/avatar:
+    patch:
+      $ref: ../swagger/paths/user/avatar/patch.yaml
 components:
   securitySchemes:
     bearerAuth:
