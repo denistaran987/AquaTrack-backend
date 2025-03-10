@@ -1,0 +1,48 @@
+tags:
+  - Water
+summary: Add  water portion
+operationId: addWater
+description: 'Create data of water portion with payload'
+security:
+  - bearerAuth: []
+requestBody:
+  content:
+    application/json:
+      schema:
+        type: object
+        required:
+          - amount
+          - date
+        properties:
+          amount:
+            description: '"Time to drinking water portion"'
+            type: number
+            example: 100
+          date:
+            description: 'Time of drinking a portion of water'
+            type: string
+            example: '2024-03-01T10:00:00.000Z'
+
+responses:
+  '200':
+    description: Create water portion
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 201
+            message:
+              type: string
+              example: Successfully created water portion!
+            data:
+              type: object
+              $ref: '../../components/schemas/water.yaml'
+  '401':
+    $ref: '../../components/responses/401.yaml'

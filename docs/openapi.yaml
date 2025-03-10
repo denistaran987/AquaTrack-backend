@@ -13,23 +13,35 @@ tags:
     description: Auth operations.
 servers:
   - url: http://localhost:3000
-  - url: https://nodejs-hw-mongodb-7mno.onrender.com
+  - url: https://aquatrack-backend-1b8z.onrender.com
 paths:
   /auth/signin:
     post:
       $ref: ../swagger/paths/auth/signin/post.yaml
-  /auth/refresh:
+  /auth/signup:
     post:
-      $ref: ../swagger/paths/auth/refresh/post.yaml
-  /user:
+      $ref: ../swagger/paths/auth/signup/post.yaml
+  /auth/logout:
+    post:
+      $ref: ../swagger/paths/auth/logout/post.yaml
+  /auth/totalUsers:
     get:
-      $ref: ../swagger/paths/user/get.yaml
-  /user:
+      $ref: ../swagger/paths/auth/totalUsers/get.yaml
+  /water:
+    post:
+      $ref: ../swagger/paths/water/post.yaml
+  /water/{id}:
     patch:
-      $ref: ../swagger/paths/user/patch.yaml
-  /user/avatar:
-    patch:
-      $ref: ../swagger/paths/user/avatar/patch.yaml
+      $ref: ../swagger/paths/water/{id}/patch.yaml
+    delete:
+      $ref: ../swagger/paths/water/{id}/delete.yaml
+  /water/day:
+    get:
+      $ref: ../swagger/paths/water/get-day.yaml
+  /water/month:
+    get:
+      $ref: ../swagger/paths/water/get-month.yaml
+
 components:
   securitySchemes:
     bearerAuth:

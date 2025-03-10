@@ -14,7 +14,7 @@
       "url": "http://localhost:3000"
     },
     {
-      "url": "https://nodejs-hw-mongodb-7mno.onrender.com"
+      "url": "https://aquatrack-backend-1b8z.onrender.com"
     }
   ],
   "tags": [
@@ -113,6 +113,552 @@
           }
         }
       }
+    },
+    "/auth/signup": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "User register",
+        "operationId": "registerUser",
+        "description": "Authorization a user using email and password.",
+        "security": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "name",
+                  "email",
+                  "password"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "format": "name",
+                    "example": "John Doe",
+                    "minimum": 2,
+                    "maximum": 12
+                  },
+                  "email": {
+                    "type": "string",
+                    "format": "email",
+                    "example": "user@example.com"
+                  },
+                  "password": {
+                    "type": "string",
+                    "format": "password",
+                    "example": "P@ssw0rd!"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully registered a user!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully registered the user!"
+                    },
+                    "data": {
+                      "type": "object",
+                      "required": [
+                        "accessToken"
+                      ],
+                      "properties": {
+                        "accessToken": {
+                          "type": "string",
+                          "description": "JWT access token",
+                          "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          }
+        }
+      }
+    },
+    "/auth/logout": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "User logout",
+        "operationId": "logoutUser",
+        "description": "Logs out the authenticated user by invalidating their session or token.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully logged out the user.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully logged out."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/auth/totalUsers": {
+      "get": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Retrieve total number of registered users",
+        "operationId": "totalUser",
+        "description": "Returns the total count of users registered in the application.",
+        "security": [],
+        "responses": {
+          "200": {
+            "description": "Successful response with the total user count.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Total number of registered users retrieved successfully!"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "totalUsers": {
+                          "type": "integer",
+                          "example": 152
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          }
+        }
+      }
+    },
+    "/water": {
+      "post": {
+        "tags": [
+          "Water"
+        ],
+        "summary": "Add  water portion",
+        "operationId": "addWater",
+        "description": "Create data of water portion with payload",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "amount",
+                  "date"
+                ],
+                "properties": {
+                  "amount": {
+                    "description": "\"Time to drinking water portion\"",
+                    "type": "number",
+                    "example": 100
+                  },
+                  "date": {
+                    "description": "Time of drinking a portion of water",
+                    "type": "string",
+                    "example": "2024-03-01T10:00:00.000Z"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Create water portion",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 201
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully created water portion!"
+                    },
+                    "data": {
+                      "type": "object",
+                      "$ref": "#/components/schemas/water"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/water/{id}": {
+      "patch": {
+        "tags": [
+          "Water"
+        ],
+        "summary": "Update water portion",
+        "operationId": "updateWater",
+        "description": "Update the portion of water by id",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "65ca67e7ae7f10c88b598384"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "amount": {
+                    "description": "The amount of water drunk, ml",
+                    "type": "number",
+                    "example": 100
+                  },
+                  "date": {
+                    "description": "Time of drinking a portion of water",
+                    "type": "string",
+                    "example": "2024-03-01T10:00:00.000Z"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Patch data of water portion",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully patched the data of water portion!"
+                    },
+                    "data": {
+                      "type": "object",
+                      "$ref": "#/components/schemas/water"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Water"
+        ],
+        "summary": "Delete water portion",
+        "operationId": "deleteWater",
+        "description": "Delete the portion of water",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "65ca67e7ae7f10c88b598384"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successfully the portion of water deleted!"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          }
+        }
+      }
+    },
+    "/water/day": {
+      "get": {
+        "tags": [
+          "Water"
+        ],
+        "summary": "Day cards",
+        "operationId": "dayCard",
+        "description": "Retrieve the total water cards for the day. User must provide a valid access token in the `Authorization` header and a date in the query parameters to specify the day.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "date",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "example": "2025-01-12T00:00:00Z"
+            },
+            "description": "The date to specify the day for which the water cards are being retrieved. Must be in ISO 8601 format."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved the total water cards for the day.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Total day water cards"
+                    },
+                    "data": {
+                      "type": "object",
+                      "required": [
+                        "date",
+                        "totalDayWater",
+                        "consumedWaterData",
+                        "owner"
+                      ],
+                      "properties": {
+                        "date": {
+                          "type": "string",
+                          "format": "date-time",
+                          "example": "2025-01-12T00:00:00Z"
+                        },
+                        "totalDayWater": {
+                          "description": "The total amount of water consumed per day, in milliliters.",
+                          "type": "number",
+                          "example": 5000
+                        },
+                        "consumedWaterData": {
+                          "description": "The list of water cards for the day.",
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/water"
+                          }
+                        },
+                        "owner": {
+                          "description": "The unique identifier of the user who owns the water cards.",
+                          "type": "string",
+                          "example": "60d21b4667d0d8992e610c85"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/water/month": {
+      "get": {
+        "tags": [
+          "Water"
+        ],
+        "summary": "Month cards",
+        "operationId": "monthCard",
+        "description": "Retrieve the total water cards for the month. This endpoint allows the authenticated user to get a summary of their water intake for a specific month. The user must provide a valid access token in the `Authorization` header and a date in the query parameters to specify the month.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "date",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "example": "2025-01-01T00:00:00Z"
+            },
+            "description": "The date to specify the month for which the water cards are being retrieved. Must be in ISO 8601 format."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved the total water cards for the month.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Total month water cards"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "date",
+                          "totalDayWater"
+                        ],
+                        "properties": {
+                          "date": {
+                            "type": "string",
+                            "format": "date-time",
+                            "example": "2025-01-01T00:00:00Z"
+                          },
+                          "totalDayWater": {
+                            "description": "The total amount of water consumed per day, in milliliters.",
+                            "type": "number",
+                            "example": 5000
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -207,6 +753,67 @@
                 }
               }
             }
+          }
+        }
+      },
+      "500": {
+        "description": "Internal server error.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "status",
+                "message"
+              ],
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 500
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Something went wrong. Please try again later."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "schemas": {
+      "water": {
+        "type": "object",
+        "required": [
+          "_id",
+          "amount",
+          "date",
+          "owner"
+        ],
+        "properties": {
+          "_id": {
+            "description": "Unique identifier",
+            "type": "string",
+            "example": "65ca67e7ae7f10c88b598384"
+          },
+          "amount": {
+            "description": "The water's volume (in ml)",
+            "type": "number",
+            "minimum": 0,
+            "maximum": 5000,
+            "example": 50
+          },
+          "date": {
+            "description": "Time to drinking water's portion",
+            "type": "string",
+            "format": "date-time",
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}Z$",
+            "example": "2024-03-01T10:00:00.000Z"
+          },
+          "owner": {
+            "description": "The unique identifier of the user who owns this water card.",
+            "type": "string",
+            "example": "65ca67e7ae7f10c88b598384"
           }
         }
       }
