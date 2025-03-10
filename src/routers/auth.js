@@ -18,10 +18,10 @@ import {
 } from '../controllers/auth.js';
 
 const authRouter = Router();
-authRouter.post("/refresh", ctrlWrapper(refreshUserSessionController));
 authRouter.post('/signup', validateBody(registerUserSchema), ctrlWrapper(registerUserController));
 authRouter.post('/signin', validateBody(loginUserSchema), ctrlWrapper(loginUserController));
 authRouter.post('/logout', ctrlWrapper(logoutUserController));
+authRouter.post('/refresh', ctrlWrapper(refreshUserSessionController));
 authRouter.get('/totalUsers', ctrlWrapper(countUsersController));
 authRouter.post(
   '/send-reset-email',
