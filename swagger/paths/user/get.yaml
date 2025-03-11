@@ -1,17 +1,10 @@
 tags:
   - Users
 summary: Get current user
-operationId: getCurrentUserController
-description: Get current user by cookies
+operationId: currentUserInfo
+description: Get current user info
 security:
   - bearerAuth: []
-parameters:
-  - in: query
-    name: userId
-    required: true
-    schema:
-      type: string
-      example: 67b91abbb180078c4327247d
 responses:
   '200':
     description: Current user with id
@@ -19,10 +12,6 @@ responses:
       application/json:
         schema:
           type: object
-          required:
-            - status
-            - message
-            - data
           properties:
             status:
               type: integer

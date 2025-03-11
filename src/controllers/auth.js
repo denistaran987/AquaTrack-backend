@@ -1,5 +1,5 @@
 import {
-  refreshUsersSession,
+  refreshUserSession,
   countUsers,
   loginUser,
   logoutUser,
@@ -8,28 +8,6 @@ import {
   resetPassword,
 } from '../services/auth.js';
 import { setupSession } from '../utils/setupSession.js';
-
-/**
- * Refresh user session token
- * @param {*} req
- * @param {*} res
- */
-export const refreshUserSessionController = async (req, res) => {
-  const session = await refreshUsersSession({
-    sessionId: req.cookies.sessionId,
-    refreshToken: req.cookies.refreshToken,
-  });
-
-  setupSession(res, session);
-
-  res.json({
-    status: 200,
-    message: 'Successfully refreshed a session!',
-    data: {
-      accessToken: session.accessToken,
-    },
-  });
-};
 
 /**
  * Registration user
@@ -65,6 +43,28 @@ export const loginUserController = async (req, res) => {
 };
 
 /**
+ * Refresh user session token
+ * @param {*} req
+ * @param {*} res
+ */
+export const refreshUserSessionController = async (req, res) => {
+  const session = await refreshUserSession({
+    sessionId: req.cookies.sessionId,
+    refreshToken: req.cookies.refreshToken,
+  });
+
+  setupSession(session, res);
+
+  res.json({
+    status: 200,
+    message: 'Successfully refreshed a session!',
+    data: {
+      accessToken: session.accessToken,
+    },
+  });
+};
+
+/**
  * Logout user
  * @param {*} req
  * @param {*} res
@@ -80,6 +80,20 @@ export const logoutUserController = async (req, res) => {
 };
 
 /**
+ * Total number of users
+ * @param {*} req
+ * @param {*} res
+ */
+export const countUsersController = async (req, res) => {
+  const totalUsers = await countUsers();
+  res.json({
+    status: 200,
+    message: 'Total number of registered users retrieved successfully!',
+    data: { totalUsers },
+  });
+};
+
+/**
  * Reset password by email
  * @param {*} req
  * @param {*} res
@@ -90,20 +104,6 @@ export const resetEmailController = async (req, res) => {
     status: 200,
     message: 'Reset password email has been successfully sent.',
     data: {},
-  });
-};
-
-/**
- * Total number of users
- * @param {*} req
- * @param {*} res
- */
-export const countUsersController = async (req, res) => {
-  const totalUsers = await countUsers();
-  res.json({
-    status: 200,
-    message: 'Total number of registred users retrieved successfully!',
-    data: { totalUsers },
   });
 };
 

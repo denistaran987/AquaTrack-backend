@@ -1,7 +1,7 @@
 tags:
   - Users
 summary: Update current user avatar
-operationId: updateUser
+operationId: updateUserAvatar
 description: Update current user avatar.
 security:
   - bearerAuth: []

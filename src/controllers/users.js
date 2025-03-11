@@ -1,5 +1,8 @@
 import createHttpError from 'http-errors';
-import { updateUser } from '../services/user';
+import { updateUser } from '../services/users.js';
+import { getEnvVar } from '../utils/getEnvVar.js';
+import { saveFileToCloudinary } from '../utils/saveFileToCloudinary.js';
+import { saveFileToUploadDir } from '../utils/saveFileToUploadDir.js';
 
 /**
  * Get current user data
@@ -25,24 +28,34 @@ export const getCurrentUserController = async (req, res, next) => {
  * @param {*} res
  * @param {*} next
  */
+
 export const patchUserController = async (req, res, next) => {
   const userId = req.user._id;
   const photo = req.file;
-  let result = false;
 
-  if (!photo) {
-    result = await updateUser(userId, { ...req.body });
-  } else {
-    result = await updateUser(userId, { ...req.body, avatarUrl: photo });
+  let photoUrl;
+
+  if (photo) {
+    if (getEnvVar('ENABLE_CLOUDINARY') === 'true') {
+      photoUrl = await saveFileToCloudinary(photo);
+    } else {
+      photoUrl = await saveFileToUploadDir(photo);
+    }
   }
+
+  const result = await updateUser(userId, {
+    ...req.body,
+    avatarUrl: photoUrl,
+    upsert: true,
+  });
 
   if (!result) {
-    throw createHttpError(404, 'User not found');
+    throw createHttpError(404, 'Contact not found');
   }
 
-  res.status(200).json({
+  res.json({
     status: 200,
-    message: 'Successfully patched a user!',
+    message: 'Successfully patched a contact!',
     data: result,
   });
 };

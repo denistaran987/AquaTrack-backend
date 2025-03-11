@@ -33,7 +33,6 @@ paths:
   /user:
     get:
       $ref: ../swagger/paths/user/get.yaml
-  /user:
     patch:
       $ref: ../swagger/paths/user/patch.yaml
   /user/avatar:

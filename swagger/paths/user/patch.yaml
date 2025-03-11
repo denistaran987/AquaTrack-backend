@@ -1,7 +1,7 @@
 tags:
   - Users
 summary: Update current user
-operationId: updateUser
+operationId: updateUserInfo
 description: Update current user.
 security:
   - bearerAuth: []
@@ -10,15 +10,7 @@ requestBody:
     application/json:
       schema:
         type: object
-        required:
-          - id
-          - name
-          - email
-          - gender
         properties:
-          id:
-            type: string
-            example: '67b0fb1c07658221fbada021'
           name:
             type: string
             example: 'Joker'
@@ -27,14 +19,14 @@ requestBody:
             example: 'cetetak579@kurbieh.com'
           gender:
             type: string
-            example: 'cetetak579@kurbieh.com'
-            enum: ['woman', 'man']
+            enum: ['female', 'male']
+            example: 'female'
           weight:
             type: number
-            example: 0
+            example: 75
           dailySportTime:
             type: number
-            example: 0
+            example: 3
           dailyNorm:
             type: number
             example: 1500
@@ -58,10 +50,10 @@ responses:
               example: Successfully patched a user!
             data:
               type: object
-              $ref: '../../../components/schemas/user.yaml'
+              $ref: '../../components/schemas/user.yaml'
   '400':
-    $ref: ../../../components/responses/400.yaml
+    $ref: ../../components/responses/400.yaml
   '401':
-    $ref: ../../../components/responses/401.yaml
+    $ref: ../../components/responses/401.yaml
   '404':
-    $ref: ../../../components/responses/404.yaml
+    $ref: ../../components/responses/404.yaml

@@ -2,33 +2,29 @@ import { model, Schema } from 'mongoose';
 
 const usersSchema = new Schema(
   {
-    name: { type: String, required: true },
+    name: { type: String, required: true, default: ' ' },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     gender: {
       type: String,
       required: true,
-      enum: ['woman', 'man'],
-      default: 'woman',
+      enum: ['female', 'male'],
+      default: 'female',
     },
     weight: {
       type: Number,
-      required: false,
       default: 0,
     },
     dailySportTime: {
       type: Number,
-      required: false,
       default: 0,
     },
     dailyNorm: {
       type: Number,
-      required: false,
       default: 1500,
     },
     avatarUrl: {
       type: String,
-      required: false,
       default: 'https://www.gravatar.com/avatar/?d=mp',
     },
   },

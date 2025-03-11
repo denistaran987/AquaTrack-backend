@@ -296,6 +296,334 @@
         }
       }
     },
+    "/auth/refresh": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "User token refresh",
+        "operationId": "refreshUsersSession",
+        "description": "Refresh user session token.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "sessionId",
+                  "refreshToken"
+                ],
+                "properties": {
+                  "sessionId": {
+                    "type": "string",
+                    "format": "id",
+                    "example": "67b0f823c9218c15b8e3701b"
+                  },
+                  "refreshToken": {
+                    "type": "string",
+                    "format": "token",
+                    "example": "kV6GUh3zOMc+b9tIsOamv5NuZt9ABqxOroJ+/QSL"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully refreshed a session!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully refreshed a session!"
+                    },
+                    "data": {
+                      "type": "object",
+                      "required": [
+                        "accessToken"
+                      ],
+                      "properties": {
+                        "accessToken": {
+                          "type": "string",
+                          "description": "JWT access token",
+                          "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          }
+        }
+      }
+    },
+    "/user": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Get current user",
+        "operationId": "getCurrentUserController",
+        "description": "Get current user by cookies",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "userId",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "67b91abbb180078c4327247d"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Current user with id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully found contact with id 67b91abbb180078c4327247d!"
+                    },
+                    "data": {
+                      "type": "object",
+                      "$ref": "#/components/schemas/user"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Update current user",
+        "operationId": "updateUser",
+        "description": "Update current user.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "id",
+                  "name",
+                  "email",
+                  "gender"
+                ],
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "example": "67b0fb1c07658221fbada021"
+                  },
+                  "name": {
+                    "type": "string",
+                    "example": "Joker"
+                  },
+                  "email": {
+                    "type": "string",
+                    "example": "cetetak579@kurbieh.com"
+                  },
+                  "gender": {
+                    "type": "string",
+                    "example": "cetetak579@kurbieh.com",
+                    "enum": [
+                      "woman",
+                      "man"
+                    ]
+                  },
+                  "weight": {
+                    "type": "number",
+                    "example": 0
+                  },
+                  "dailySportTime": {
+                    "type": "number",
+                    "example": 0
+                  },
+                  "dailyNorm": {
+                    "type": "number",
+                    "example": 1500
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully patched a user!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully patched a user!"
+                    },
+                    "data": {
+                      "type": "object",
+                      "$ref": "#/components/schemas/user"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          }
+        }
+      }
+    },
+    "/user/avatar": {
+      "patch": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Update current user avatar",
+        "operationId": "updateUserAvatar",
+        "description": "Update current user avatar.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data:": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "id"
+                ],
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "example": "67b0fb1c07658221fbada021"
+                  },
+                  "avatarUrl": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully patched a user!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully patched a user!"
+                    },
+                    "data": {
+                      "type": "object",
+                      "$ref": "#/components/schemas/user"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          }
+        }
+      }
+    },
     "/water": {
       "post": {
         "tags": [
@@ -782,6 +1110,74 @@
       }
     },
     "schemas": {
+      "user": {
+        "type": "object",
+        "required": [
+          "name",
+          "email",
+          "password"
+        ],
+        "properties": {
+          "_id": {
+            "description": "User's id",
+            "type": "string",
+            "example": "65e4decdd286b30065d54af9"
+          },
+          "name": {
+            "description": "User's name",
+            "type": "string",
+            "example": "John Doe",
+            "default": "",
+            "minimum": 2,
+            "maximum": 12
+          },
+          "email": {
+            "description": "User's email",
+            "type": "string",
+            "example": "varvara@gmail.com"
+          },
+          "password": {
+            "description": "User's password",
+            "type": "string",
+            "example": "$2b$10$EixZaYVK1fsbw1ZfbX3OXeP"
+          },
+          "gender": {
+            "description": "User's gender",
+            "type": "string",
+            "enum": [
+              "woman",
+              "man"
+            ],
+            "default": "woman"
+          },
+          "weight": {
+            "description": "User's weight",
+            "type": "number",
+            "example": 55,
+            "default": 0
+          },
+          "dailySportTime": {
+            "description": "User's dailySportTime",
+            "type": "number",
+            "example": 5,
+            "default": 0
+          },
+          "dailyNorm": {
+            "description": "User's dailyNorm",
+            "type": "integer",
+            "example": 1500,
+            "default": 1500,
+            "minimum": 500,
+            "maximum": 15000
+          },
+          "avatarUrl": {
+            "description": "Link to user's photo",
+            "type": "string",
+            "example": "https://res.cloudinary.com/uqwgdu/image/upload/image.png",
+            "default": null
+          }
+        }
+      },
       "water": {
         "type": "object",
         "required": [

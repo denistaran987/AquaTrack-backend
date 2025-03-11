@@ -1,7 +1,7 @@
 import createHttpError from 'http-errors';
 import { SessionsCollection } from '../db/models/session.js';
 import bcrypt from 'bcrypt';
-import { UsersCollection } from '../db/models/user.js';
+import { UsersCollection } from '../db/models/users.js';
 import { randomBytes } from 'crypto';
 import { FIFTEEN_MINUTES, ONE_MONTH } from '../constants/times/constants.js';
 import jwt from 'jsonwebtoken';
@@ -120,18 +120,18 @@ export const resetPassword = async (payload) => {
   await UsersCollection.updateOne({ _id: user._id }, { password: encryptedPassword });
 };
 
-export const refreshUsersSession = async ({ sessionId, refreshToken }) => {
+export const refreshUserSession = async ({ sessionId, refreshToken }) => {
   const session = await SessionsCollection.findOne({
     _id: sessionId,
     refreshToken,
   });
-  // Checking session existence
+
   if (!session) {
     throw createHttpError(401, 'Session not found');
   }
 
   const isSessionTokenExpired = new Date() > new Date(session.refreshTokenValidUntil);
-  // Checking token expired
+
   if (isSessionTokenExpired) {
     throw createHttpError(401, 'Session token expired');
   }
