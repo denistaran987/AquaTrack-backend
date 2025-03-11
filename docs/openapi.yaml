@@ -27,6 +27,18 @@ paths:
   /auth/totalUsers:
     get:
       $ref: ../swagger/paths/auth/totalUsers/get.yaml
+  /auth/refresh:
+    post:
+      $ref: ../swagger/paths/auth/refresh/post.yaml
+  /user:
+    get:
+      $ref: ../swagger/paths/user/get.yaml
+  /user:
+    patch:
+      $ref: ../swagger/paths/user/patch.yaml
+  /user/avatar:
+    patch:
+      $ref: ../swagger/paths/user/avatar/patch.yaml
   /water:
     post:
       $ref: ../swagger/paths/water/post.yaml
@@ -41,7 +53,6 @@ paths:
   /water/month:
     get:
       $ref: ../swagger/paths/water/get-month.yaml
-
 components:
   securitySchemes:
     bearerAuth:

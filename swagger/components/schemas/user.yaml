@@ -26,8 +26,8 @@ properties:
   gender:
     description: "User's gender"
     type: string
-    enum: ['female', 'male']
-    default: 'female'
+    enum: ['woman', 'man']
+    default: 'woman'
   weight:
     description: "User's weight"
     type: number

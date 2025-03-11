@@ -2,51 +2,37 @@ import { model, Schema } from 'mongoose';
 
 const usersSchema = new Schema(
   {
-    name: {
-      type: String,
-      default: ' ',
-      required: true,
-    },
-    email: {
-      type: String,
-      required: true,
-      unique: true,
-    },
-    password: {
-      type: String,
-      required: true,
-    },
+    name: { type: String, required: true },
+    email: { type: String, required: true, unique: true },
+    password: { type: String, required: true },
     gender: {
       type: String,
-      enum: ['male', 'female'],
-      default: 'female',
       required: true,
+      enum: ['woman', 'man'],
+      default: 'woman',
     },
     weight: {
       type: Number,
+      required: false,
       default: 0,
-      required: true,
     },
     dailySportTime: {
       type: Number,
+      required: false,
       default: 0,
-      required: true,
     },
     dailyNorm: {
       type: Number,
+      required: false,
       default: 1500,
-      required: true,
     },
     avatarUrl: {
       type: String,
-      default: ' ',
-      required: true,
+      required: false,
+      default: 'https://www.gravatar.com/avatar/?d=mp',
     },
   },
-  {
-    timestamps: true,
-    versionKey: false,
-  },
+  { timestamps: true, versionKey: false },
 );
 
 usersSchema.methods.toJSON = function () {
@@ -55,4 +41,4 @@ usersSchema.methods.toJSON = function () {
   return obj;
 };
 
-export const UsersCollection = model('user', usersSchema);
+export const UsersCollection = model('users', usersSchema);

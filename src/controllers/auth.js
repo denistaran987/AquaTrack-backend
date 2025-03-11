@@ -1,4 +1,5 @@
 import {
+  refreshUsersSession,
   countUsers,
   loginUser,
   logoutUser,
@@ -8,6 +9,33 @@ import {
 } from '../services/auth.js';
 import { setupSession } from '../utils/setupSession.js';
 
+/**
+ * Refresh user session token
+ * @param {*} req
+ * @param {*} res
+ */
+export const refreshUserSessionController = async (req, res) => {
+  const session = await refreshUsersSession({
+    sessionId: req.cookies.sessionId,
+    refreshToken: req.cookies.refreshToken,
+  });
+
+  setupSession(res, session);
+
+  res.json({
+    status: 200,
+    message: 'Successfully refreshed a session!',
+    data: {
+      accessToken: session.accessToken,
+    },
+  });
+};
+
+/**
+ * Registration user
+ * @param {*} req
+ * @param {*} res
+ */
 export const registerUserController = async (req, res) => {
   const user = await registerUser(req.body);
   res.status(201).json({
@@ -17,6 +45,11 @@ export const registerUserController = async (req, res) => {
   });
 };
 
+/**
+ * Login user
+ * @param {*} req
+ * @param {*} res
+ */
 export const loginUserController = async (req, res) => {
   const session = await loginUser(req.body);
 
@@ -31,6 +64,11 @@ export const loginUserController = async (req, res) => {
   });
 };
 
+/**
+ * Logout user
+ * @param {*} req
+ * @param {*} res
+ */
 export const logoutUserController = async (req, res) => {
   if (req.cookies.sessionId) {
     await logoutUser(req.cookies.sessionId);
@@ -41,6 +79,11 @@ export const logoutUserController = async (req, res) => {
   res.status(204).send();
 };
 
+/**
+ * Reset password by email
+ * @param {*} req
+ * @param {*} res
+ */
 export const resetEmailController = async (req, res) => {
   await requestResetToken(req.body.email);
   res.json({
@@ -50,6 +93,11 @@ export const resetEmailController = async (req, res) => {
   });
 };
 
+/**
+ * Total number of users
+ * @param {*} req
+ * @param {*} res
+ */
 export const countUsersController = async (req, res) => {
   const totalUsers = await countUsers();
   res.json({
@@ -59,6 +107,11 @@ export const countUsersController = async (req, res) => {
   });
 };
 
+/**
+ * Reset password
+ * @param {*} req
+ * @param {*} res
+ */
 export const resetPasswordController = async (req, res) => {
   await resetPassword(req.body);
   res.json({

@@ -1,0 +1,37 @@
+tags:
+  - Users
+summary: Get current user
+operationId: getCurrentUserController
+description: Get current user by cookies
+security:
+  - bearerAuth: []
+parameters:
+  - in: query
+    name: userId
+    required: true
+    schema:
+      type: string
+      example: 67b91abbb180078c4327247d
+responses:
+  '200':
+    description: Current user with id
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: Successfully found contact with id 67b91abbb180078c4327247d!
+            data:
+              type: object
+              $ref: '../../components/schemas/user.yaml'
+  '401':
+    $ref: '../../components/responses/401.yaml'
