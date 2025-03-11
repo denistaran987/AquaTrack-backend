@@ -13,8 +13,8 @@ properties:
     type: string
     example: 'John Doe'
     default: ''
-    minimum: 2
-    maximum: 12
+    minimum: 3
+    maximum: 20
   email:
     description: "User's email"
     type: string
@@ -26,8 +26,8 @@ properties:
   gender:
     description: "User's gender"
     type: string
-    enum: ['woman', 'man']
-    default: 'woman'
+    enum: ['female', 'male']
+    default: 'female'
   weight:
     description: "User's weight"
     type: number
@@ -44,7 +44,7 @@ properties:
     example: 1500
     default: 1500
     minimum: 500
-    maximum: 15000
+    maximum: 5000
   avatarUrl:
     description: "Link to user's photo"
     type: string

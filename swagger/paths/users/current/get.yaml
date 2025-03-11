@@ -21,6 +21,6 @@ responses:
               example: Successfully found contact with id 67b91abbb180078c4327247d!
             data:
               type: object
-              $ref: '../../components/schemas/user.yaml'
+              $ref: '../../../components/schemas/user.yaml'
   '401':
-    $ref: '../../components/responses/401.yaml'
+    $ref: '../../../components/responses/401.yaml'

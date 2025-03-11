@@ -11,16 +11,9 @@ requestBody:
       schema:
         type: object
         required:
-          - name
           - email
           - password
         properties:
-          name:
-            type: string
-            format: name
-            example: 'John Doe'
-            minimum: 2
-            maximum: 12
           email:
             type: string
             format: email

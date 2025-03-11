@@ -12,7 +12,6 @@ tags:
   - name: Auth
     description: Auth operations.
 servers:
-  - url: http://localhost:3000
   - url: https://aquatrack-backend-1b8z.onrender.com
 paths:
   /auth/signin:
@@ -30,14 +29,15 @@ paths:
   /auth/refresh:
     post:
       $ref: ../swagger/paths/auth/refresh/post.yaml
-  /user:
+  /users/current:
     get:
-      $ref: ../swagger/paths/user/get.yaml
+      $ref: ../swagger/paths/users/current/get.yaml
+  /users:
     patch:
-      $ref: ../swagger/paths/user/patch.yaml
-  /user/avatar:
+      $ref: ../swagger/paths/users/patch.yaml
+  /users/avatar:
     patch:
-      $ref: ../swagger/paths/user/avatar/patch.yaml
+      $ref: ../swagger/paths/users/avatar/patch.yaml
   /water:
     post:
       $ref: ../swagger/paths/water/post.yaml

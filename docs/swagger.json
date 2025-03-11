@@ -11,9 +11,6 @@
   },
   "servers": [
     {
-      "url": "http://localhost:3000"
-    },
-    {
       "url": "https://aquatrack-backend-1b8z.onrender.com"
     }
   ],
@@ -130,18 +127,10 @@
               "schema": {
                 "type": "object",
                 "required": [
-                  "name",
                   "email",
                   "password"
                 ],
                 "properties": {
-                  "name": {
-                    "type": "string",
-                    "format": "name",
-                    "example": "John Doe",
-                    "minimum": 2,
-                    "maximum": 12
-                  },
                   "email": {
                     "type": "string",
                     "format": "email",
@@ -385,28 +374,17 @@
         }
       }
     },
-    "/user": {
+    "/users/current": {
       "get": {
         "tags": [
           "Users"
         ],
         "summary": "Get current user",
-        "operationId": "getCurrentUserController",
-        "description": "Get current user by cookies",
+        "operationId": "currentUserInfo",
+        "description": "Get current user info",
         "security": [
           {
             "bearerAuth": []
-          }
-        ],
-        "parameters": [
-          {
-            "in": "query",
-            "name": "userId",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "example": "67b91abbb180078c4327247d"
-            }
           }
         ],
         "responses": {
@@ -416,11 +394,6 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": [
-                    "status",
-                    "message",
-                    "data"
-                  ],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -443,13 +416,15 @@
             "$ref": "#/components/responses/401"
           }
         }
-      },
+      }
+    },
+    "/users": {
       "patch": {
         "tags": [
           "Users"
         ],
         "summary": "Update current user",
-        "operationId": "updateUser",
+        "operationId": "updateUserInfo",
         "description": "Update current user.",
         "security": [
           {
@@ -461,17 +436,7 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "required": [
-                  "id",
-                  "name",
-                  "email",
-                  "gender"
-                ],
                 "properties": {
-                  "id": {
-                    "type": "string",
-                    "example": "67b0fb1c07658221fbada021"
-                  },
                   "name": {
                     "type": "string",
                     "example": "Joker"
@@ -482,19 +447,19 @@
                   },
                   "gender": {
                     "type": "string",
-                    "example": "cetetak579@kurbieh.com",
                     "enum": [
-                      "woman",
-                      "man"
-                    ]
+                      "female",
+                      "male"
+                    ],
+                    "example": "female"
                   },
                   "weight": {
                     "type": "number",
-                    "example": 0
+                    "example": 75
                   },
                   "dailySportTime": {
                     "type": "number",
-                    "example": 0
+                    "example": 3
                   },
                   "dailyNorm": {
                     "type": "number",
@@ -547,7 +512,7 @@
         }
       }
     },
-    "/user/avatar": {
+    "/users/avatar": {
       "patch": {
         "tags": [
           "Users"
@@ -565,9 +530,6 @@
             "multipart/form-data:": {
               "schema": {
                 "type": "object",
-                "required": [
-                  "id"
-                ],
                 "properties": {
                   "id": {
                     "type": "string",
@@ -1128,8 +1090,8 @@
             "type": "string",
             "example": "John Doe",
             "default": "",
-            "minimum": 2,
-            "maximum": 12
+            "minimum": 3,
+            "maximum": 20
           },
           "email": {
             "description": "User's email",
@@ -1145,10 +1107,10 @@
             "description": "User's gender",
             "type": "string",
             "enum": [
-              "woman",
-              "man"
+              "female",
+              "male"
             ],
-            "default": "woman"
+            "default": "female"
           },
           "weight": {
             "description": "User's weight",
@@ -1168,7 +1130,7 @@
             "example": 1500,
             "default": 1500,
             "minimum": 500,
-            "maximum": 15000
+            "maximum": 5000
           },
           "avatarUrl": {
             "description": "Link to user's photo",
