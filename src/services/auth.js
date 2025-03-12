@@ -31,10 +31,22 @@ export const registerUser = async (payload) => {
 
   const encryptedPassword = await bcrypt.hash(payload.password, 10);
 
-  return await UsersCollection.create({
+  const newUser = await UsersCollection.create({
     ...payload,
     password: encryptedPassword,
   });
+
+  const newSession = createSession();
+  const session = await SessionsCollection.create({
+    userId: newUser._id,
+    ...newSession,
+  });
+
+  return {
+    id: newUser._id,
+    email: newUser.email,
+    accessToken: session.accessToken,
+  };
 };
 
 export const loginUser = async (payload) => {
@@ -43,6 +55,7 @@ export const loginUser = async (payload) => {
     throw createHttpError(404, ' User not found');
   }
   const isEqual = await bcrypt.compare(payload.password, user.password);
+
   if (!isEqual) {
     throw createHttpError(401, 'Unauthorized');
   }

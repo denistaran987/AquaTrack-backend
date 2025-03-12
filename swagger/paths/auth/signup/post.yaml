@@ -43,11 +43,22 @@ responses:
             data:
               type: object
               required:
+                - id
+                - email
                 - accessToken
               properties:
+                id:
+                  type: string
+                  description: The unique identifier of the user
+                  example: 67d18eeec877ea14ac3492c0
+                email:
+                  type: string
+                  format: email
+                  description: The user's email address
+                  example: 'user@example.com'
                 accessToken:
                   type: string
-                  description: JWT access token
+                  description: access token used for authentication
                   example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'
   '400':
     $ref: '../../../components/responses/400.yaml'
