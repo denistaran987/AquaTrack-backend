@@ -8,14 +8,26 @@ import router from './routers/index.js';
 import cookieParser from 'cookie-parser';
 import { swaggerDocs } from './middlewares/swaggerDocs.js';
 
+const allowedOrigins = [
+  'https://aquatrack-app.vercel.app',
+  'http://localhost:5173',
+  'http://localhost:5172',
+];
+
 const PORT = +getEnvVar(ENV_VAR.MONGODB_PORT, 3000);
 
 export const setupServer = () => {
   const app = express();
 
-  app.use(express.json());
-  app.use(cors());
   app.use(cookieParser());
+  app.use(express.json());
+  app.use(
+    cors({
+      origin: allowedOrigins,
+      credentials: true,
+      optionsSuccessStatus: 200,
+    }),
+  );
 
   app.use(router);
   app.use('/api-docs', swaggerDocs());
