@@ -36,6 +36,8 @@ export const registerUser = async (payload) => {
     password: encryptedPassword,
   });
 
+  await SessionsCollection.deleteOne({ userId: newUser._id });
+
   const newSession = createSession();
   const session = await SessionsCollection.create({
     userId: newUser._id,
@@ -45,7 +47,7 @@ export const registerUser = async (payload) => {
   return {
     id: newUser._id,
     email: newUser.email,
-    accessToken: session.accessToken,
+    session,
   };
 };
 
