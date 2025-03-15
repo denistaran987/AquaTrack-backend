@@ -12,9 +12,10 @@ requestBody:
         required:
           - email
         properties:
-           type: string
- *         format: email
- *         example: user@example.com
+          email:
+            format: email
+            description: 'User Email'
+            type: string
 responses:
   '200':
     description: Reset password email was successfully sent!
