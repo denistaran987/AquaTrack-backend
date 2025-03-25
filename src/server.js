@@ -10,7 +10,6 @@ import { swaggerDocs } from './middlewares/swaggerDocs.js';
 
 const allowedOrigins = [
   'https://aquatrack-app.vercel.app',
-  'https://aqua-track-client.vercel.app',
   'http://localhost:5174',
   'http://localhost:5173',
   'http://localhost:5172',
